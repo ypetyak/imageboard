@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" type= "text/css" href="/stylesheet.css">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    <title>Imageboard</title>
+</head>
+<body>
+
+    <div id="main">
+    <div id="fakeHeader">
+        <img src="./house.svg" id="logo" v-on:click = "moveUp">
+        <div id="line"></div>
+        <h1 id="title"> Interior Palace </h1>
+
+
+
+
+    <!-- we don't have to use a form tag -->
+
+        <form class="formBox">
+            <input v-model = "form.title" type = "text" name = "title" placeholder= "Title" required>
+            <input v-model = "form.username" type = "text" name = "username" placeholder= "Username" required>
+            <input v-model = "form.description" type = "text" name = "description" placeholder= "Description" required>
+
+            <label class="filebutton">
+            <span><input type = "file" accept = "image/*"></span>
+            </label>
+
+            <!-- <input type = "file" accept = "image/*"> -->
+
+            <!-- image is to accept only image,and start for all formats.  -->
+            <!-- <button v-on:click = "uploadFile"> Upload </button> -->
+            <input class="imageButton" type="image" v-on:click = "uploadFile" name="submit" value="submit" src="./upload.svg" />
+        </form>
+    </div>
+    <div id="gridBox">
+
+        <div class="imageBox" v-if="images.length > 0" v-for="image in images">
+        <a v-bind:href="'#' + image.id">
+            <img class="image" v-bind:src="image.url">
+        </a>
+            <p class="imageTitle">{{image.title}}</p>
+
+        </div>
+
+        </div>
+
+        <image-modal v-if="show" :id="id" v-on:close="hide"></image-modal>
+
+
+
+        <!-- <h1 v-bind:class="headingClassName" v-bind:style="'color:' + color">{{heading}}</h1>
+        <input type="text" v-model="greetee">
+        <h1 @click="handleClick">Click here, see there: {{greetee}}</h1>
+
+        <v-on:close="nullifyCurrentImageId">
+        <li v-for="city in cities">{{city.name}}, {{city.country}}
+        </ul> -->
+
+    </div>
+
+    <script id="image" type="x-template">
+
+        <div id="imagePopup" @click="closePopup">
+        <a href="#" class="close"></a>
+            <div id="infoPopup">
+                <img class="modalImage" v-bind:src="info.url" >
+            <div id="commentField">
+                <div id="decriptionField">
+                    <h2 class="modalImageTitle">{{ info.title }}</h2>
+                    <p>posted by <b><em>{{ info.username }}</em></b></p>
+                    <p id="dateAndTime"> {{ info.created_at }} </p>
+                    <p id="smallDescription"><em>Description</em>: {{ info.description }}</p>
+                </div>
+                <div class="commentBox">
+                    <div v-if="comments.length > 0" v-for="comm in comments" >
+                        <div class="comment">
+                        <p><b>{{comm.username}}</b>: {{comm.comment}}</p>
+
+                        </div>
+                    </div>
+                    </div>
+                <form class='commentImput'>
+                    <input class="commentText" v-model = "form.comment" type = "text" name = "comment" placeholder = "Comment" required>
+                    <input class="commentUser" v-model = "form.username" type = "text" name = "username" placeholder = "Username" required>
+                    <button class="commentInputButton" v-on:click="addComments">Comment</button>
+                </form>
+
+                </div>
+                </div>
+        </div>
+
+
+    </script>
+
+
+    <script src="/js/vue.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+</body>
+</html>
