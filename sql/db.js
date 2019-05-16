@@ -1,8 +1,15 @@
 const spicedPg = require("spiced-pg");
 
-const secrets = require("../secrets.json");
-const dbUrl = secrets.dbUrl;
+const dbUrl;
+
+if (!process.env.NODE_ENV == "production") {
+    let secrets = require("../secrets.json");
+    dbUrl = secrets.dbUrl;
+} 
+
 const db = spicedPg(process.env.DATABASE_URL || dbUrl);
+
+
 
 exports.getImages = () => {
     const q = `
