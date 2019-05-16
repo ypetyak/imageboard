@@ -54,6 +54,8 @@
 
                     app.form.comment = "";
                     app.form.username = "";
+                }).catch(error => {
+                    console.log(error);
                 });
             }
         }
@@ -106,6 +108,8 @@
                     app.form.title = "";
                     app.form.description = "";
                     app.form.username = "";
+                }).catch(error => {
+                    console.log(error);
                 });
 
                 // console.log("Vue Instance: ", this);

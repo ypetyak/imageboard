@@ -1,11 +1,9 @@
 const spicedPg = require("spiced-pg");
 
-let dbUrl = null;
 
-if (!process.env.NODE_ENV == "production") {
-    let secrets = require("../secrets.json");
-    dbUrl = secrets.dbUrl;
-} 
+const secrets = require("../secrets.json");
+const dbUrl = secrets.dbUrl;
+
 
 const db = spicedPg(process.env.DATABASE_URL || dbUrl);
 
