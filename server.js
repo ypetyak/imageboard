@@ -70,8 +70,6 @@ app.get("/images", (req, res) => {
 ////////////
 
 app.get("/moreImages", (req, res) => {
-    console.log("More Images Req: ", req.query.lastImageId);
-
     db.getMoreImages(req.query.lastImageId)
         .then(results => {
             res.json(results.rows);
@@ -85,23 +83,17 @@ app.get("/moreImages", (req, res) => {
 ///// Here we will create a new GET request for a modal to get information from the Table for our single image page.
 
 app.get("/images/:image_id", (req, res) => {
-    // console.log("this is: ", req);
+
     var imageID = req.params.image_id;
-    // console.log("Image ID?", req.params.image_id);
+
     db.getOneImage(imageID)
         .then(result => {
-            // console.log("First Result", result.rows);
+
             var ImageInfo = result.rows;
             db.selectComments(req.params.image_id).then(result => {
-                // console.log("Second Results", result.rows);
                 var totalInfo = ImageInfo.concat(result.rows);
-                // console.log("All Results: ", totalInfo);
                 res.json(totalInfo);
             });
-            // console.log("Here are the results:", results.rows);
-            // res.json = results.rows;
-
-            // res.render("index");
         })
         .catch(err => {
             console.log("Error in extracting One Image:", err);
@@ -111,9 +103,6 @@ app.get("/images/:image_id", (req, res) => {
 ////// Post request for modals
 
 app.post("/images/:image_id", (req, res) => {
-    // console.log("Our request: ", req);
-    console.log("Our Body: ", req.body.comment);
-    console.log("Hre is our post request for images", req.params.image_id);
 
     db.insertComments(req.params.image_id, req.body.comment, req.body.username)
         .then(results => {
@@ -137,7 +126,6 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         req.body.username
     )
         .then(({ rows }) => {
-            console.log("Anything hwread");
             res.json({
                 image: rows[0]
             });
