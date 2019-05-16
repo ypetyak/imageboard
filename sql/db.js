@@ -1,8 +1,8 @@
 const spicedPg = require("spiced-pg");
 
 const secrets = require("../secrets.json");
-const dbUrl = process.env.DATABASE_URL || secrets.dbUrl;
-const db = spicedPg(dbUrl);
+const dbUrl = secrets.dbUrl;
+const db = spicedPg(process.env.DATABASE_URL || dbUrl);
 
 exports.getImages = () => {
     const q = `
